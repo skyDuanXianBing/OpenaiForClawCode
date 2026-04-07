@@ -23,11 +23,11 @@
 ---
 
 ## Quick Install
-
+clone project 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/paoloanzn/free-code/main/install.sh | bash
+bun install 
+bun dev
 ```
-
 Checks your system, installs Bun if needed, clones the repo, builds with all experimental features enabled, and symlinks `free-code` on your PATH.
 
 Then run `free-code` and authenticate with your preferred model provider.
