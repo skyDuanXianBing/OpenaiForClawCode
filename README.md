@@ -5,10 +5,12 @@
 <h1 align="center">free-code</h1>
 
 <p align="center">
-  <strong>The free build of Claude Code.</strong><br>
+  <strong>The free build of Claude Code, with native OpenAI model support.</strong><br>
   All telemetry stripped. All guardrails removed. All experimental features unlocked.<br>
   One binary, zero callbacks home.
 </p>
+
+> **OpenAI-native workflow:** run OpenAI models directly inside the `free-code` / Claude Code CLI flow by setting `CLAUDE_CODE_USE_OPENAI=1`, `OPENAI_API_KEY`, and optionally `OPENAI_BASE_URL`.
 
 <p align="center">
   <a href="#quick-install"><img src="https://img.shields.io/badge/install-one--liner-blue?style=flat-square" alt="Install" /></a>
@@ -28,7 +30,16 @@ curl -fsSL https://raw.githubusercontent.com/paoloanzn/free-code/main/install.sh
 
 Checks your system, installs Bun if needed, clones the repo, builds with all experimental features enabled, and symlinks `free-code` on your PATH.
 
-Then run `free-code` and use the `/login` command to authenticate with your preferred model provider.
+Then run `free-code` and authenticate with your preferred model provider.
+
+For native OpenAI usage inside the Claude Code-style workflow:
+
+```bash
+export CLAUDE_CODE_USE_OPENAI=1
+export OPENAI_API_KEY="your-openai-api-key"
+export OPENAI_BASE_URL="https://api.openai.com/v1"  # optional for compatible gateways
+free-code
+```
 
 ---
 
@@ -91,7 +102,7 @@ Use Anthropic's first-party API directly.
 
 ### OpenAI Codex
 
-Use OpenAI's Codex models for code generation. Requires a Codex subscription.
+Run OpenAI models natively inside the Claude Code-style CLI flow. Supports both direct API key auth and Codex OAuth.
 
 | Model | ID |
 |---|---|
@@ -101,8 +112,12 @@ Use OpenAI's Codex models for code generation. Requires a Codex subscription.
 
 ```bash
 export CLAUDE_CODE_USE_OPENAI=1
+export OPENAI_API_KEY="your-openai-api-key"
+export OPENAI_BASE_URL="https://api.openai.com/v1"  # optional
 free-code
 ```
+
+Use `OPENAI_BASE_URL` when routing through an OpenAI-compatible proxy or gateway.
 
 ### AWS Bedrock
 
@@ -152,7 +167,7 @@ Supports custom deployment IDs as model names.
 | Provider | Env Variable | Auth Method |
 |---|---|---|
 | Anthropic (default) | -- | `ANTHROPIC_API_KEY` or OAuth |
-| OpenAI Codex | `CLAUDE_CODE_USE_OPENAI=1` | OAuth via OpenAI |
+| OpenAI Codex | `CLAUDE_CODE_USE_OPENAI=1` | `OPENAI_API_KEY` or OpenAI OAuth |
 | AWS Bedrock | `CLAUDE_CODE_USE_BEDROCK=1` | AWS credentials |
 | Google Vertex AI | `CLAUDE_CODE_USE_VERTEX=1` | `gcloud` ADC |
 | Anthropic Foundry | `CLAUDE_CODE_USE_FOUNDRY=1` | `ANTHROPIC_FOUNDRY_API_KEY` |
@@ -236,6 +251,9 @@ bun run dev
 | `ANTHROPIC_DEFAULT_HAIKU_MODEL` | Custom Haiku model ID |
 | `CLAUDE_CODE_OAUTH_TOKEN` | OAuth token via env |
 | `CLAUDE_CODE_API_KEY_HELPER_TTL_MS` | API key helper cache TTL |
+| `CLAUDE_CODE_USE_OPENAI` | Enable OpenAI provider |
+| `OPENAI_API_KEY` | OpenAI API key for direct auth |
+| `OPENAI_BASE_URL` | Override OpenAI API base URL |
 
 ---
 
